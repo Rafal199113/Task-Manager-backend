@@ -4,18 +4,23 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Resources\UserResource;
+use App\Http\Resources\ModuleResource;
 use App\Models\User;
+use Spatie\Permission\Models\Permission;
 
-class UserController extends Controller
+class PermissionsController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        return UserResource::collection(
-            User::orderBy('id_user')->with('roles.permissions')->get()
-        );
+        $permissions = collect();
+
+        foreach (Permission::all() as $permission) {
+
+        }
+        return ModuleResource::collection(Permission::all());
     }
 
     /**
@@ -24,7 +29,6 @@ class UserController extends Controller
     public function store(Request $request)
     {
         $user = User::create($request->all());
-
         return new UserResource($user);
     }
 
@@ -33,8 +37,7 @@ class UserController extends Controller
      */
     public function show(string $id)
     {
-        $user = User::find($id)->load("roles");
-        return new UserResource($user);
+        return new UserResource(User::find($id));
     }
 
     /**
@@ -43,20 +46,12 @@ class UserController extends Controller
     public function update(Request $request, string $id)
     {
         $user = User::find($id);
-        if (!$request->password) {
-            $user->fill($request->except('password', 'roles'));
-        } else {
-            $user->fill($request->except('roles'));
+        if(!$request->password){
+             $user->fill($request->except('password'));
+        }else {
+            $user->fill($request->all());
         }
         $user->save();
-
-        if (isset($request->roles)) {
-            $user->syncRoles(
-                $request->roles
-            );
-        }
-
-        $user->load('roles');
 
         return new UserResource($user);
     }
@@ -69,16 +64,5 @@ class UserController extends Controller
         //
     }
 
-    public function getMe(string $id)
-    {
-        $user = User::with('roles.permissions')
-    ->findOrFail($id);
 
-        return new UserResource( $user);
-    }
-
-    public function updatePremissions(Request $request, int $id)
-    {
-
-    }
 }
