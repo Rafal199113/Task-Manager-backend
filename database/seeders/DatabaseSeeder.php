@@ -10,6 +10,7 @@ use Database\Seeders\RoleSeeder;
 use Database\Seeders\PremissionsSeeder;
 use Database\Seeders\ModuleSeeder;
 use Database\Seeders\ModulePositionSeeder;
+use Database\Seeders\ProjectStatusesSeeder;
 
 class DatabaseSeeder extends Seeder
 {
@@ -26,6 +27,7 @@ class DatabaseSeeder extends Seeder
             UserSeeder::class,
             ModuleSeeder::class,
             ModulePositionSeeder::class,
+            ProjectStatusesSeeder::class,
         ]);
     }
 }
