@@ -46,4 +46,13 @@ class User extends Authenticatable  implements JWTSubject
     {
         return [];
     }
+
+    public function scopeActive($query, $active)
+    {
+        if ($active === 'true') {
+            return $query->where('active', true);
+        } 
+        
+        return $query;
+    }
 }

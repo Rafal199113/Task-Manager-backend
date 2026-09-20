@@ -27,7 +27,6 @@ class ProjectController
     {
         $user = auth()->user();
 
-
         $project->fill($request->all());
         $project->id_owner = $user->id_user;
         $project->id_lead = $user->id_user;
@@ -44,7 +43,7 @@ class ProjectController
      */
     public function show(string $id)
     {
-           
+        return new ProjectResource(Project::findOrFail($id)->load('relationOwner', 'relationLead'));
     }
 
     /**
@@ -52,7 +51,11 @@ class ProjectController
      */
     public function update(Request $request, string $id)
     {
+   $project = Project::findOrFail($id);
+        $project->update($request->all());
 
+        return json_encode($request->all());
+     
      
     }
 
@@ -61,7 +64,10 @@ class ProjectController
      */
     public function destroy(string $id)
     {
-        //
+        $project = Project::findOrFail($id);
+        $project->delete();
+
+        return response()->json(['message' => 'Projekt został usunięty pomyślnie.'], 200);
     }
 
 

@@ -11,10 +11,11 @@ class UserController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
+            
         return UserResource::collection(
-            User::orderBy('id_user')->with('roles.permissions')->get()
+            User::orderBy('id_user')->with('roles.permissions')->active($request->input('active'))->get()
         );
     }
 
