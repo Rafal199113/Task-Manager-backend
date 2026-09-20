@@ -31,7 +31,7 @@ class Project extends Model
         'p_start_date',
         'p_end_date',
         'p_priority',
-        'id_project_statues'
+        'id_project_statuses'
     ];
 
     public function relationOwner()

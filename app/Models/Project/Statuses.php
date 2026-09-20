@@ -20,6 +20,7 @@ class Statuses extends Model
     protected $guard_name = 'api';
 
     protected $fillable = [
+        'id_project_statuses',
         'id_project',
         'ps_name',
         'ps_slug',

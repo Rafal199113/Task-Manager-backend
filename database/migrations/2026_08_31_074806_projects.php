@@ -16,7 +16,7 @@ return new class extends Migration
 				id_project      SERIAL NOT NULL,
                 id_owner	       INTEGER NOT NULL,
                 id_lead          INTEGER NOT NULL,
-                id_project_statuses INTEGER NOT NULL,
+                id_project_statuses INTEGER,
                 p_name			CHARACTER VARYING(100) NOT NULL,
                 p_repository    CHARACTER VARYING(255),
                 p_key			CHARACTER VARYING(100) NOT NULL,
