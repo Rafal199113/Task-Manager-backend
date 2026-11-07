@@ -8,6 +8,8 @@ use App\Http\Controllers\ModuleController;
 use App\Http\Controllers\PermissionsController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\ProjectController;
+use App\Http\Controllers\GitChubApiController;
+use App\Http\Controllers\SettingController;
 
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/refreshToken', [AuthController::class, 'refreshToken']);
@@ -21,6 +23,12 @@ Route::middleware('auth:api')->group(function () {
     Route::resource('roles', RoleController::class);
     Route::resource('permissions', PermissionsController::class);
     Route::resource('projects', ProjectController::class);
+    Route::resource('settings', SettingController::class);
+    Route::get('/settings_positions', [SettingController::class, 'settingPositionsIndex']);
     Route::get('/logout', [AuthController::class, 'logout']);
+
+    Route::get('/gitchub/api/repositories', [GitChubApiController::class, 'repositories']);
 });
+
+
 

@@ -102,6 +102,12 @@ class AuthController extends Controller
         }
     }
 
+    $settingModule = Module::where('m_code', 'settings')->first();
+
+    if($settingModule){
+        $modules[] = $settingModule;
+    }
+    
     return [
         'header' => $request->header('Authorization'),
         'user' => auth()->user()->load('roles'),
